@@ -59,4 +59,8 @@ public class Estabelecimento extends AbstractIdentity<Long> {
     @OneToMany(mappedBy = "estabelecimento")
     private Set<Comentarios> comentarios = new HashSet<>();
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "FK_USUARIO")
+    private Usuario usuario;
 }
