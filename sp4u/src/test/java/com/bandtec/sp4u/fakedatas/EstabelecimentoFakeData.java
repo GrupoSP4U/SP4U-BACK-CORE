@@ -1,6 +1,7 @@
 package com.bandtec.sp4u.fakedatas;
 
 import com.bandtec.sp4u.domain.entities.Estabelecimento;
+import com.bandtec.sp4u.domain.entities.Usuario;
 import com.bandtec.sp4u.domain.models.enums.EstiloMusica;
 import com.bandtec.sp4u.domain.models.enums.TipoEstabelecimento;
 
@@ -41,7 +42,8 @@ public class EstabelecimentoFakeData {
                     3.0,
                     "",
                     "",
-                    null, null, null, null
+                    null, null, null, null,
+                    Usuario.builder().build()
             ),
             new Estabelecimento(
                     "Blitz Haus",
@@ -53,7 +55,8 @@ public class EstabelecimentoFakeData {
                     3.0,
                     "",
                     "",
-                    null, null, null, null
+                    null, null, null, null,
+                    Usuario.builder().build()
             ),
             new Estabelecimento(
                     "La Sabrosa",
@@ -65,7 +68,8 @@ public class EstabelecimentoFakeData {
                     1.0,
                     "",
                     "",
-                    null, null, null, null
+                    null, null, null, null,
+                    Usuario.builder().build()
             )
     );
 }

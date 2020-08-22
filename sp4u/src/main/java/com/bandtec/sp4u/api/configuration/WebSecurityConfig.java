@@ -53,11 +53,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+        // Used to load h2-console elements
+        httpSecurity.headers().frameOptions().sameOrigin();
+
         // We don't need CSRF for this example
         httpSecurity.csrf().disable()
                 // dont authenticate this particular request
                 .authorizeRequests().antMatchers("/authenticate").permitAll().
                 antMatchers("/usuario/register").permitAll().
+                antMatchers("/h2-console/**").permitAll().
                 antMatchers("/").permitAll().
                 antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
