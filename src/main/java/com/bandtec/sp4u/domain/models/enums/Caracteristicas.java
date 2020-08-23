@@ -6,5 +6,8 @@ public enum Caracteristicas {
     ANIMADO,
     ENTEDIADO,
     DESANIMADO,
-    FOGOSO
+    FOGOSO,
+    PETS,
+    VEGANO,
+    VEGETARIANO
 }
