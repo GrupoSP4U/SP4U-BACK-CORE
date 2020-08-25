@@ -147,7 +147,7 @@ public class EstabelecimentoServiceTest {
         Assert.assertNotNull(response);
         Assert.assertTrue(response.isSuccess());
         Assert.assertEquals(4,response.getEstabelecimentos().size());
-        Assert.assertEquals("Recanto",response.getEstabelecimentos().get(0).getNome());
+        Assert.assertEquals("Recanto",response.getEstabelecimentos().get(0).getNomeFantasia());
     }
 
     @Test
@@ -166,7 +166,7 @@ public class EstabelecimentoServiceTest {
         Assert.assertNotNull(response);
         Assert.assertTrue(response.isSuccess());
         Assert.assertEquals(4,response.getEstabelecimentos().size());
-        Assert.assertEquals("Recanto",response.getEstabelecimentos().get(0).getNome());
+        Assert.assertEquals("Recanto",response.getEstabelecimentos().get(0).getNomeFantasia());
     }
 
     @Test

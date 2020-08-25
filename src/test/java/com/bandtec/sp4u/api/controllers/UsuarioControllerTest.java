@@ -1,32 +1,36 @@
 package com.bandtec.sp4u.api.controllers;
 
-import com.bandtec.sp4u.api.requests.AuthenticationRequest;
 import com.bandtec.sp4u.api.requests.PasswordRequest;
 import com.bandtec.sp4u.domain.entities.Usuario;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Method;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 
 @SpringBootTest
-class UsuarioControllerTest {
+@RunWith(SpringRunner.class)
+public class UsuarioControllerTest {
 
     @Autowired
     private UsuarioController controller;
     private Class classe = UsuarioController.class;
 
     @Test
-    void usuarioControllerConfiguration(){
+    public void usuarioControllerConfiguration(){
         assertTrue(this.classe.isAnnotationPresent(RequestMapping.class));
         assertTrue(this.classe.isAnnotationPresent(RestController.class));
     }
 
     @Test
-    void getAllUsersConfiguration() throws NoSuchMethodException {
+    public void getAllUsersConfiguration() throws NoSuchMethodException {
 
         Method users = classe.getDeclaredMethod("getAllUsers");
 
@@ -34,7 +38,7 @@ class UsuarioControllerTest {
     }
 
     @Test
-    void getByIdConfiguration() throws NoSuchMethodException {
+    public void getByIdConfiguration() throws NoSuchMethodException {
 
         Method getById = classe.getDeclaredMethod("getById", Long.class);
 
@@ -46,7 +50,7 @@ class UsuarioControllerTest {
     }
 
     @Test
-    void saveUserConfiguration() throws NoSuchMethodException {
+    public void saveUserConfiguration() throws NoSuchMethodException {
 
         Method saveUser = classe.getDeclaredMethod("saveUser", Usuario.class);
 
@@ -58,7 +62,7 @@ class UsuarioControllerTest {
     }
 
     @Test
-    void changePasswordConfiguration() throws NoSuchMethodException {
+    public void changePasswordConfiguration() throws NoSuchMethodException {
 
         Method changePassword = classe.getDeclaredMethod("changePassword", PasswordRequest.class, String.class);
 
@@ -70,7 +74,7 @@ class UsuarioControllerTest {
     }
 
     @Test
-    void changeEmailConfiguration() throws NoSuchMethodException {
+    public void changeEmailConfiguration() throws NoSuchMethodException {
 
         Method changeEmail = classe.getDeclaredMethod("changeEmail", String.class, String.class);
 

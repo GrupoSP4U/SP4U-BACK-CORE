@@ -40,12 +40,10 @@ public class Estabelecimento extends AbstractIdentity<Long> {
     private Boolean estaAberto;
 
     @Column(name = "HORARIO_ABRE")
-    @Temporal(TemporalType.TIME)
-    private Date horarioAbre;
+    private String horarioAbre;
 
     @Column(name = "HORARIO_FECHA")
-    @Temporal(TemporalType.TIME)
-    private Date horarioFecha;
+    private String horarioFecha;
 
     @Column(name = "ENDERECO")
     private String endereco;
