@@ -1,5 +1,6 @@
 package com.bandtec.sp4u.domain.entities;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,8 +18,14 @@ import lombok.*;
 @Entity(name = "ESTABELECIMENTO")
 public class Estabelecimento extends AbstractIdentity<Long> {
 
-    @Column(name = "NOME")
-    private String nome;
+    @Column(name = "NOME_FANTASIA")
+    private String nomeFantasia;
+
+    @Column(name = "RAZAO_SOCIAL")
+    private String razaoSocial;
+
+    @Column(name = "EMAIL_CONTATO")
+    private String emailContato;
 
     @Column(name = "CNPJ")
     private String cnpj;
@@ -32,8 +39,22 @@ public class Estabelecimento extends AbstractIdentity<Long> {
     @Column(name = "ESTA_ABERTO")
     private Boolean estaAberto;
 
+    @Column(name = "HORARIO_ABRE")
+    @Temporal(TemporalType.TIME)
+    private Date horarioAbre;
+
+    @Column(name = "HORARIO_FECHA")
+    @Temporal(TemporalType.TIME)
+    private Date horarioFecha;
+
     @Column(name = "ENDERECO")
     private String endereco;
+
+    @Column(name = "NUMERO_ENDERECO")
+    private String numeroEndereco;
+
+    @Column(name = "COMPLEMENTO")
+    private String complemento;
 
     @Column(name = "NOTA")
     private Double nota;
@@ -43,6 +64,9 @@ public class Estabelecimento extends AbstractIdentity<Long> {
 
     @Column(name = "DESCRICAO", length = 400)
     private String descricao;
+
+    @Column(name = "PARA_MAIORES")
+    private Boolean paraMaiores;
 
     @OneToOne(mappedBy = "estabelecimento")
     private TagsEstabelecimento tagsEstabelecimento;

@@ -58,8 +58,12 @@ public class EstabelecimentoServiceImpl implements EstabelecimentoService {
     }
 
     private boolean validateEstabelecimento(Estabelecimento estabelecimento) {
-        return estabelecimento.getNome() != null && estabelecimento.getEstaAberto() != null && estabelecimento.getCep()
-                != null && estabelecimento.getCnpj() != null && estabelecimento.getDescricao() != null &&
+        return estabelecimento.getNomeFantasia() != null && estabelecimento.getRazaoSocial()!= null &&
+                estabelecimento.getEmailContato()!= null && estabelecimento.getHorarioAbre()!= null &&
+                estabelecimento.getHorarioFecha()!= null && estabelecimento.getNumeroEndereco()!= null &&
+                estabelecimento.getComplemento()!= null && estabelecimento.getParaMaiores()!= null &&
+                estabelecimento.getEstaAberto() != null && estabelecimento.getCep() != null &&
+                estabelecimento.getCnpj() != null && estabelecimento.getDescricao() != null &&
                 estabelecimento.getEndereco() != null && estabelecimento.getMediaPreco() != null &&
                 estabelecimento.getNota() != null && estabelecimento.getFoto() != null;
     }
