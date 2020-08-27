@@ -1,11 +1,16 @@
 package com.bandtec.sp4u.domain.entities;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.*;
+
+import com.bandtec.sp4u.api.requests.EstabelecimentoRequest;
+import com.bandtec.sp4u.domain.models.enums.Dias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @SuppressWarnings("serial")
 @AllArgsConstructor
@@ -13,55 +18,26 @@ import java.util.Set;
 @Builder
 @Setter
 @Getter
-@Entity(name = "ESTABELECIMENTO")
+@Entity()
 public class Estabelecimento extends AbstractIdentity<Long> {
 
-    @Column(name = "NOME_FANTASIA")
     private String nomeFantasia;
-
-    @Column(name = "RAZAO_SOCIAL")
     private String razaoSocial;
-
-    @Column(name = "EMAIL_CONTATO")
     private String emailContato;
-
-    @Column(name = "CNPJ")
     private String cnpj;
-
-    @Column(name = "CEP")
     private String cep;
-
-    @Column(name = "MEDIA_PRECO")
     private String mediaPreco;
-
-    @Column(name = "ESTA_ABERTO")
-    private Boolean estaAberto;
-
-    @Column(name = "HORARIO_ABRE")
-    private String horarioAbre;
-
-    @Column(name = "HORARIO_FECHA")
-    private String horarioFecha;
-
-    @Column(name = "ENDERECO")
+    private Double horarioAbre;
+    private Double horarioFecha;
     private String endereco;
-
-    @Column(name = "NUMERO_ENDERECO")
-    private String numeroEndereco;
-
-    @Column(name = "COMPLEMENTO")
+    private Integer numeroEndereco;
     private String complemento;
-
-    @Column(name = "NOTA")
     private Double nota;
-
-    @Column(name = "FOTO")
     private String foto;
 
-    @Column(name = "DESCRICAO", length = 400)
+    @Column(length = 400)
     private String descricao;
 
-    @Column(name = "PARA_MAIORES")
     private Boolean paraMaiores;
 
     @OneToOne(mappedBy = "estabelecimento")
@@ -79,8 +55,40 @@ public class Estabelecimento extends AbstractIdentity<Long> {
     @OneToMany(mappedBy = "estabelecimento")
     private Set<Comentarios> comentarios = new HashSet<>();
 
+    @ElementCollection(targetClass= Dias.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name="DIAS_FUNCIONAMENTO")
+    private Collection<Dias> dias;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "FK_USUARIO")
     private Usuario usuario;
+
+    public static Estabelecimento toEntity(EstabelecimentoRequest dto) {
+        Estabelecimento estabelecimento = new Estabelecimento();
+
+        estabelecimento.nomeFantasia = dto.getNomeFantasia();
+        estabelecimento.razaoSocial = dto.getRazaoSocial();
+        estabelecimento.emailContato = dto.getEmailContato();
+        estabelecimento.cnpj = dto.getCnpj();
+        estabelecimento.cep = dto.getCep();
+        estabelecimento.mediaPreco = dto.getMediaPreco();
+        estabelecimento.horarioAbre = dto.getHorarioAbre();
+        estabelecimento.horarioFecha = dto.getHorarioFecha();
+        estabelecimento.endereco = dto.getEndereco();
+        estabelecimento.numeroEndereco = dto.getNumeroEndereco();
+        estabelecimento.complemento = dto.getComplemento();
+        estabelecimento.nota = dto.getNota();
+        estabelecimento.foto = dto.getFoto();
+        estabelecimento.descricao = dto.getDescricao();
+        estabelecimento.paraMaiores = dto.getParaMaiores();
+        estabelecimento.dias = dto.getDiasDeFuncionamento();
+
+        if(estabelecimento.tagsEstabelecimento != null) {
+            estabelecimento.tagsEstabelecimento = dto.getTagsEstabelecimento();
+        }
+
+        return estabelecimento;
+    }
 }
