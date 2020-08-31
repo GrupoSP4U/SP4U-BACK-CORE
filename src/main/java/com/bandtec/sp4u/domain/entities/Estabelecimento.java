@@ -1,13 +1,11 @@
 package com.bandtec.sp4u.domain.entities;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @SuppressWarnings("serial")
 @AllArgsConstructor
