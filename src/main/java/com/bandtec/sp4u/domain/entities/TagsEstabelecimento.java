@@ -5,10 +5,7 @@ import com.bandtec.sp4u.domain.models.enums.Caracteristicas;
 import com.bandtec.sp4u.domain.models.enums.EstiloMusica;
 import com.bandtec.sp4u.domain.models.enums.TipoEstabelecimento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -17,6 +14,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @Setter
 @Getter
+@Builder
 @Entity(name = "TAGS_ESTABELECIMENTO")
 public class TagsEstabelecimento extends AbstractIdentity<Long> {
 

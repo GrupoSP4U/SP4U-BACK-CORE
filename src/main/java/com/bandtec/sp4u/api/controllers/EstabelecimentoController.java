@@ -1,7 +1,6 @@
 package com.bandtec.sp4u.api.controllers;
 
 import com.bandtec.sp4u.application.responses.DetailResponse;
-import com.bandtec.sp4u.application.responses.FilterResponse;
 import com.bandtec.sp4u.domain.entities.Estabelecimento;
 import com.bandtec.sp4u.domain.models.enums.Acompanhamento;
 import com.bandtec.sp4u.domain.models.enums.Caracteristicas;
@@ -33,9 +32,7 @@ public class EstabelecimentoController {
 
 		DetailResponse response = service.getDetailsPlace(estabelecimentoId);
 
-		if (response.isFailure())
-			return notFound().build();
-		return ok(response);
+		return response.isFailure()? notFound().build() : ok(response);
 	}
 
 	@GetMapping
@@ -44,11 +41,9 @@ public class EstabelecimentoController {
 			@RequestParam(required = false) List<TipoEstabelecimento> estiloRole,
 			@RequestParam(required = false) List<EstiloMusica> estiloMusica) {
 
-		FilterResponse response = service.getPlaces(statusDia, acompanhado, estiloRole, estiloMusica);
+		List<Estabelecimento> response = service.getPlaces(statusDia, acompanhado, estiloRole, estiloMusica);
 
-		if(response.isSuccess())
-			return ok(response);
-		return badRequest().body(response);
+		return response.isEmpty()? status(500).build() : ok(response);
 	}
 
 	@PostMapping

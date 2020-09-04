@@ -1,12 +1,14 @@
 package com.bandtec.sp4u.fakedatas;
 
 import com.bandtec.sp4u.domain.entities.Estabelecimento;
+import com.bandtec.sp4u.domain.entities.TagsEstabelecimento;
 import com.bandtec.sp4u.domain.entities.Usuario;
+import com.bandtec.sp4u.domain.models.enums.Acompanhamento;
+import com.bandtec.sp4u.domain.models.enums.Caracteristicas;
 import com.bandtec.sp4u.domain.models.enums.EstiloMusica;
 import com.bandtec.sp4u.domain.models.enums.TipoEstabelecimento;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 public class EstabelecimentoFakeData {
@@ -28,18 +30,25 @@ public class EstabelecimentoFakeData {
     private static final String DESCRICAO = "Bar no Centro de SP";
     private static final boolean PARA_MAIORES = true;
 
-    public static final Estabelecimento ESTABELECIMENTO_VALID = Estabelecimento.builder().nomeFantasia(NOME_FANTASIA)
-            .razaoSocial(RAZAO_SOCIAL).emailContato(EMAIL_CONTATO).cnpj(CNPJ).cep(CEP).mediaPreco(MEDIA_PRECO)
-            .estaAberto(ESTA_ABERTO).horarioAbre(HORARIO_ABRE).horarioFecha(HORARIO_FECHA).endereco(ENDERECO)
-            .numeroEndereco(NUMERO_ENDERECO).complemento(COMPLEMENTO).nota(NOTA).foto(FOTO).descricao(DESCRICAO)
-            .paraMaiores(PARA_MAIORES)
-            .build();
-
     public static final List<TipoEstabelecimento> TIPO_ESTABELECIMENTOS = Arrays.asList(TipoEstabelecimento.BALADA,
             TipoEstabelecimento.BAR);
 
     public static final List<EstiloMusica> ESTILO_MUSICAS = Arrays.asList(EstiloMusica.ELETRONICA,
             EstiloMusica.HIP_HOP);
+
+    public static final TagsEstabelecimento TAGS_ESTABELECIMENTO = TagsEstabelecimento.builder()
+            .tipoEstabelecimento(TIPO_ESTABELECIMENTOS)
+            .estiloMusica(ESTILO_MUSICAS)
+            .caracteristicas(Arrays.asList(Caracteristicas.ANIMADO))
+            .tipoAcompanhamento(Arrays.asList(Acompanhamento.AMIGOS)).build();
+
+    public static final Estabelecimento ESTABELECIMENTO_VALID = Estabelecimento.builder().nomeFantasia(NOME_FANTASIA)
+            .razaoSocial(RAZAO_SOCIAL).emailContato(EMAIL_CONTATO).cnpj(CNPJ).cep(CEP).mediaPreco(MEDIA_PRECO)
+            .estaAberto(ESTA_ABERTO).horarioAbre(HORARIO_ABRE).horarioFecha(HORARIO_FECHA).endereco(ENDERECO)
+            .numeroEndereco(NUMERO_ENDERECO).complemento(COMPLEMENTO).nota(NOTA).foto(FOTO).descricao(DESCRICAO)
+            .paraMaiores(PARA_MAIORES).tagsEstabelecimento(TAGS_ESTABELECIMENTO)
+            .build();
+
 
     public static final List<Estabelecimento> ESTABELECIMENTO_LIST = Arrays.asList(
             ESTABELECIMENTO_VALID,

@@ -1,7 +1,6 @@
 package com.bandtec.sp4u.services.impl;
 
 import com.bandtec.sp4u.application.responses.DetailResponse;
-import com.bandtec.sp4u.application.responses.FilterResponse;
 import com.bandtec.sp4u.domain.entities.Estabelecimento;
 import com.bandtec.sp4u.domain.interfaces.dao.EstabelecimentoRepository;
 import com.bandtec.sp4u.domain.models.enums.Acompanhamento;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EstabelecimentoServiceImpl implements EstabelecimentoService {
@@ -69,84 +69,30 @@ public class EstabelecimentoServiceImpl implements EstabelecimentoService {
     }
 
     @Override
-    public FilterResponse getPlaces(Caracteristicas statusDia, Acompanhamento acompanhado,
+    public List<Estabelecimento> getPlaces(Caracteristicas statusDia, Acompanhamento acompanhado,
                                     List<TipoEstabelecimento> estiloRole, List<EstiloMusica> estiloMusica) {
 
-        FilterResponse response = new FilterResponse();
-
-        List<Estabelecimento> listaEstabelecimento = null;
-        List<Estabelecimento> listaAuxiliar = new ArrayList<>();
+        List<Estabelecimento> listaFiltrada = null;
 
         try {
-            for (int i = 0; i < 4; i++) {
-                switch (i) {
-                    case 0:
-                        if (statusDia == null) {
-                            break;
-                        }
-                        listaEstabelecimento = repository.getEstabelecimentoByCaracteristicas(statusDia.toString());
-                        if (!listaEstabelecimento.isEmpty()) {
-                            for (int j = 0; j < listaEstabelecimento.size(); j++) {
-                                if (!listaAuxiliar.contains(listaEstabelecimento.get(j))) {
-                                    listaAuxiliar.add(listaEstabelecimento.get(j));
-                                }
-                            }
-                        }
-                        break;
-                    case 1:
-                        if (acompanhado == null) {
-                            break;
-                        }
-                        listaEstabelecimento = repository.getEstabelecimentoByAcompanhado(acompanhado.toString());
-                        if (!listaEstabelecimento.isEmpty()) {
-                            for (int j = 0; j < listaEstabelecimento.size(); j++) {
-                                if (!listaAuxiliar.contains(listaEstabelecimento.get(j))) {
-                                    listaAuxiliar.add(listaEstabelecimento.get(j));
-                                }
-                            }
-                        }
-                        break;
-                    case 2:
-                        if (estiloRole == null) {
-                            break;
-                        }
-                        listaEstabelecimento = repository.getEstabelecimentoByTipoEstabelecimento(estiloRole.get(0).toString());
-                        if (!listaEstabelecimento.isEmpty()) {
-                            for (int j = 0; j < listaEstabelecimento.size(); j++) {
-                                if (!listaAuxiliar.contains(listaEstabelecimento.get(j))) {
-                                    listaAuxiliar.add(listaEstabelecimento.get(j));
-                                }
-                            }
-                        }
-                        break;
-                    case 3:
-                        if (estiloMusica == null) {
-                            break;
-                        }
-                        listaEstabelecimento = repository.getEstabelecimentoByEstiloMusica(estiloMusica.get(0).toString());
-                        if (!listaEstabelecimento.isEmpty()) {
-                            for (int j = 0; j < listaEstabelecimento.size(); j++) {
-                                if (!listaAuxiliar.contains(listaEstabelecimento.get(j))) {
-                                    listaAuxiliar.add(listaEstabelecimento.get(j));
-                                }
-                            }
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                response.setEstabelecimentos(listaAuxiliar);
-            }
+            List<Estabelecimento> listaEstabelecimentoCompleta = repository.findAll();
 
-            if (response.getEstabelecimentos().isEmpty()) {
-                response.setEstabelecimentos(repository.findAll());
+            listaFiltrada = listaEstabelecimentoCompleta.stream().filter(
+                    estabelecimento -> estabelecimento.getTagsEstabelecimento().getCaracteristicas().equals(statusDia) ||
+                    estabelecimento.getTagsEstabelecimento().getTipoAcompanhamento().equals(acompanhado) ||
+                    estabelecimento.getTagsEstabelecimento().getEstiloMusica().stream().anyMatch(estiloMusica::contains) ||
+                    estabelecimento.getTagsEstabelecimento().getTipoEstabelecimento().stream().anyMatch(estiloRole::contains))
+                    .collect(Collectors.toList());
+
+            if (listaFiltrada.isEmpty()) {
+                return listaEstabelecimentoCompleta;
             }
 
         } catch (Exception ex) {
-            response.fail(ex.toString());
+            return new ArrayList<>();
         }
 
-        return response;
+        return listaFiltrada;
     }
 
 

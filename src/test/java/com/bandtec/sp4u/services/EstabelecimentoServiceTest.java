@@ -1,7 +1,6 @@
 package com.bandtec.sp4u.services;
 
 import com.bandtec.sp4u.application.responses.DetailResponse;
-import com.bandtec.sp4u.application.responses.FilterResponse;
 import com.bandtec.sp4u.domain.entities.Estabelecimento;
 import com.bandtec.sp4u.domain.interfaces.dao.EstabelecimentoRepository;
 import com.bandtec.sp4u.domain.models.enums.Acompanhamento;
@@ -14,12 +13,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Example;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.QueryTimeoutException;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static com.bandtec.sp4u.fakedatas.EstabelecimentoFakeData.*;
@@ -86,87 +85,45 @@ public class EstabelecimentoServiceTest {
     @Test
     public void getPlacesWhenEstabelecimentosIsNull(){
         //Cenario
-        Mockito.when(repository.getEstabelecimentoByCaracteristicas(Mockito.anyString())).thenReturn(null);
-        Mockito.when(repository.getEstabelecimentoByAcompanhado(Mockito.anyString())).thenReturn(null);
-        Mockito.when(repository.getEstabelecimentoByEstiloMusica(Mockito.anyString())).thenReturn(null);
-        Mockito.when(repository.getEstabelecimentoByTipoEstabelecimento(Mockito.anyString())).thenReturn(null);
+        Mockito.when(repository.findAll()).thenReturn(null);
 
         //Ação
-        FilterResponse response = service.getPlaces(Caracteristicas.ANIMADO, Acompanhamento.AMIGOS,
+        List<Estabelecimento> response = service.getPlaces(Caracteristicas.ANIMADO, Acompanhamento.AMIGOS,
                 TIPO_ESTABELECIMENTOS, ESTILO_MUSICAS);
 
         //Verificação
         Assert.assertNotNull(response);
-        Assert.assertTrue(response.isFailure());
-        Assert.assertEquals("java.lang.NullPointerException",response.getMessages().get(0));
-    }
-
-    @Test
-    public void getPlacesWhenRepositoryDoesntReturnAnyEstabelecimento(){
-        //Cenario
-        Mockito.when(repository.findAll(Mockito.any(Example.class))).thenReturn(new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList());
-
-        //Ação
-        FilterResponse response = service.getPlaces(Caracteristicas.ANIMADO, Acompanhamento.AMIGOS,
-                TIPO_ESTABELECIMENTOS, ESTILO_MUSICAS);
-
-        //Verificação
-        Assert.assertNotNull(response);
-        Assert.assertTrue(response.isSuccess());
-        Assert.assertEquals(0, response.getEstabelecimentos().size());
+        Assert.assertTrue(response.isEmpty());
     }
 
     @Test
     public void getPlacesWhenRepositoryThrowsException(){
         //Cenario
-        Mockito.when(repository.getEstabelecimentoByCaracteristicas(Mockito.anyString())).thenThrow(new QueryTimeoutException());
+        Mockito.when(repository.findAll()).thenThrow(new QueryTimeoutException());
 
         //Ação
-        FilterResponse response = service.getPlaces(Caracteristicas.ANIMADO, Acompanhamento.AMIGOS,
+        List<Estabelecimento> response = service.getPlaces(Caracteristicas.ANIMADO, Acompanhamento.AMIGOS,
                 TIPO_ESTABELECIMENTOS, ESTILO_MUSICAS);
 
         //Verificação
         Assert.assertNotNull(response);
-        Assert.assertTrue(response.isFailure());
-        Assert.assertEquals("javax.persistence.QueryTimeoutException",response.getMessages().get(0));
+        Assert.assertTrue(response.isEmpty());
     }
 
     @Test
     public void getPlacesWhenFiltersAreValid(){
         //Cenario
-        Mockito.when(repository.getEstabelecimentoByCaracteristicas(Mockito.anyString())).thenReturn(ESTABELECIMENTO_LIST);
-        Mockito.when(repository.getEstabelecimentoByAcompanhado(Mockito.anyString())).thenReturn(ESTABELECIMENTO_LIST);
-        Mockito.when(repository.getEstabelecimentoByEstiloMusica(Mockito.anyString())).thenReturn(ESTABELECIMENTO_LIST);
-        Mockito.when(repository.getEstabelecimentoByTipoEstabelecimento(Mockito.anyString())).thenReturn(ESTABELECIMENTO_LIST);
+        Mockito.when(repository.findAll()).thenReturn(Arrays.asList(ESTABELECIMENTO_VALID));
 
         //Ação
-        FilterResponse response = service.getPlaces(Caracteristicas.ANIMADO, Acompanhamento.AMIGOS,
+        List<Estabelecimento> response = service.getPlaces(Caracteristicas.ANIMADO, Acompanhamento.AMIGOS,
                 TIPO_ESTABELECIMENTOS, ESTILO_MUSICAS);
 
         //Verificação
         Assert.assertNotNull(response);
-        Assert.assertTrue(response.isSuccess());
-        Assert.assertEquals(4,response.getEstabelecimentos().size());
-        Assert.assertEquals("Recanto",response.getEstabelecimentos().get(0).getNomeFantasia());
-    }
-
-    @Test
-    public void getPlacesWhenParametersAreNull(){
-        //Cenario
-        Mockito.when(repository.findAll()).thenReturn(ESTABELECIMENTO_LIST);
-        Mockito.when(repository.getEstabelecimentoByCaracteristicas(Mockito.anyString())).thenReturn(new ArrayList<>());
-        Mockito.when(repository.getEstabelecimentoByAcompanhado(Mockito.anyString())).thenReturn(new ArrayList<>());
-        Mockito.when(repository.getEstabelecimentoByEstiloMusica(Mockito.anyString())).thenReturn(new ArrayList<>());
-        Mockito.when(repository.getEstabelecimentoByTipoEstabelecimento(Mockito.anyString())).thenReturn(new ArrayList<>());
-
-        //Ação
-        FilterResponse response = service.getPlaces(null,null,null,null);
-
-        //Verificação
-        Assert.assertNotNull(response);
-        Assert.assertTrue(response.isSuccess());
-        Assert.assertEquals(4,response.getEstabelecimentos().size());
-        Assert.assertEquals("Recanto",response.getEstabelecimentos().get(0).getNomeFantasia());
+        Assert.assertFalse(response.isEmpty());
+        Assert.assertEquals(1,response.size());
+        Assert.assertEquals("Recanto",response.get(0).getNomeFantasia());
     }
 
     @Test
