@@ -32,9 +32,7 @@ public class EstabelecimentoController {
 
 		DetailResponse response = service.getDetailsPlace(estabelecimentoId);
 
-		if (response.isFailure())
-			return notFound().build();
-		return ok(response);
+		return response.isFailure()? notFound().build() : ok(response);
 	}
 
 	@GetMapping
@@ -45,10 +43,7 @@ public class EstabelecimentoController {
 
 		List<Estabelecimento> response = service.getPlaces(statusDia, acompanhado, estiloRole, estiloMusica);
 
-		if(response.isEmpty())
-			return status(500).build();
-		return ok(response);
-
+		return response.isEmpty()? status(500).build() : ok(response);
 	}
 
 	@PostMapping

@@ -78,10 +78,10 @@ public class EstabelecimentoServiceImpl implements EstabelecimentoService {
             List<Estabelecimento> listaEstabelecimentoCompleta = repository.findAll();
 
             listaFiltrada = listaEstabelecimentoCompleta.stream().filter(
-                    x -> x.getTagsEstabelecimento().getCaracteristicas().equals(statusDia) ||
-                    x.getTagsEstabelecimento().getTipoAcompanhamento().equals(acompanhado) ||
-                    x.getTagsEstabelecimento().getEstiloMusica().stream().anyMatch(estiloMusica::contains) ||
-                    x.getTagsEstabelecimento().getTipoEstabelecimento().stream().anyMatch(estiloRole::contains))
+                    estabelecimento -> estabelecimento.getTagsEstabelecimento().getCaracteristicas().equals(statusDia) ||
+                    estabelecimento.getTagsEstabelecimento().getTipoAcompanhamento().equals(acompanhado) ||
+                    estabelecimento.getTagsEstabelecimento().getEstiloMusica().stream().anyMatch(estiloMusica::contains) ||
+                    estabelecimento.getTagsEstabelecimento().getTipoEstabelecimento().stream().anyMatch(estiloRole::contains))
                     .collect(Collectors.toList());
 
             if (listaFiltrada.isEmpty()) {
