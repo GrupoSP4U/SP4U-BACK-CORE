@@ -5,16 +5,21 @@ import com.bandtec.sp4u.domain.models.enums.Caracteristicas;
 import com.bandtec.sp4u.domain.models.enums.EstiloMusica;
 import com.bandtec.sp4u.domain.models.enums.TipoEstabelecimento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Setter
 @Getter
-@Builder
 @Entity(name = "TAGS_ESTABELECIMENTO")
 public class TagsEstabelecimento extends AbstractIdentity<Long> {
 
@@ -23,7 +28,7 @@ public class TagsEstabelecimento extends AbstractIdentity<Long> {
     @CollectionTable(name="CARACTERISTICA_ESTABELECIMENTO")
     @Column(name = "CARACTERISTICAS")
     private Collection<Caracteristicas> caracteristicas;
-    
+
     @ElementCollection(targetClass= TipoEstabelecimento.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name="TIPO_ESTABELECIMENTO")

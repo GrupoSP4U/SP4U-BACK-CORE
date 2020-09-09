@@ -125,42 +125,4 @@ public class EstabelecimentoServiceTest {
         Assert.assertEquals(1,response.size());
         Assert.assertEquals("Recanto",response.get(0).getNomeFantasia());
     }
-
-    @Test
-    public void savePlaceWhenEstabelecimentoIsNull(){
-        //Ação
-        Response response = service.savePlace(null);
-
-        //Verificação
-        Assert.assertNotNull(response);
-        Assert.assertTrue(response.isFailure());
-        Assert.assertEquals("Dados Inválidos!", response.getMessages().get(0));
-        Mockito.verify(repository, Mockito.never()).save(null);
-    }
-
-    @Test
-    public void savePlaceWhenEstabelecimentoIsNotValid(){
-        //Cenario
-        Estabelecimento estabelecimento = new Estabelecimento();
-
-        //Ação
-        Response response = service.savePlace(estabelecimento);
-
-        //Verificação
-        Assert.assertNotNull(response);
-        Assert.assertTrue(response.isFailure());
-        Assert.assertEquals("Dados Incompletos!", response.getMessages().get(0));
-        Mockito.verify(repository, Mockito.never()).save(null);
-    }
-
-    @Test
-    public void savePlaceWhenEstabelecimentoIsValid(){
-        //Ação
-        Response response = service.savePlace(ESTABELECIMENTO_VALID);
-
-        //Verificação
-        Assert.assertNotNull(response);
-        Assert.assertTrue(response.isSuccess());
-    }
-
 }

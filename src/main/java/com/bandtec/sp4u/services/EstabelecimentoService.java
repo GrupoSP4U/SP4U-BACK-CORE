@@ -20,6 +20,6 @@ public interface EstabelecimentoService {
             List<EstiloMusica> estiloMusica
             );
 	
-	Response savePlace(Estabelecimento estabelecimento);
+	void savePlace(Estabelecimento estabelecimento);
 	
 }
