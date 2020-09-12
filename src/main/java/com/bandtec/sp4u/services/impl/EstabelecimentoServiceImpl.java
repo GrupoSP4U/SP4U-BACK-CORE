@@ -45,27 +45,8 @@ public class EstabelecimentoServiceImpl implements EstabelecimentoService {
     }
 
     @Override
-    public Response savePlace(Estabelecimento estabelecimento) {
-        Response response = new Response();
-        if (estabelecimento != null)
-            if (validateEstabelecimento(estabelecimento))
-                repository.save(estabelecimento);
-            else
-                response.fail("Dados Incompletos!");
-        else
-            response.fail("Dados Inválidos!");
-        return response;
-    }
-
-    private boolean validateEstabelecimento(Estabelecimento estabelecimento) {
-        return estabelecimento.getNomeFantasia() != null && estabelecimento.getRazaoSocial()!= null &&
-                estabelecimento.getEmailContato()!= null && estabelecimento.getHorarioAbre()!= null &&
-                estabelecimento.getHorarioFecha()!= null && estabelecimento.getNumeroEndereco()!= null &&
-                estabelecimento.getComplemento()!= null && estabelecimento.getParaMaiores()!= null &&
-                estabelecimento.getEstaAberto() != null && estabelecimento.getCep() != null &&
-                estabelecimento.getCnpj() != null && estabelecimento.getDescricao() != null &&
-                estabelecimento.getEndereco() != null && estabelecimento.getMediaPreco() != null &&
-                estabelecimento.getNota() != null && estabelecimento.getFoto() != null;
+    public void savePlace(Estabelecimento estabelecimento) {
+        repository.save(estabelecimento);
     }
 
     @Override

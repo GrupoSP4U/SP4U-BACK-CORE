@@ -1,6 +1,6 @@
 package com.bandtec.sp4u.api.controllers;
 
-import com.bandtec.sp4u.domain.entities.Estabelecimento;
+import com.bandtec.sp4u.api.requests.EstabelecimentoRequest;
 import com.bandtec.sp4u.domain.models.enums.Acompanhamento;
 import com.bandtec.sp4u.domain.models.enums.Caracteristicas;
 import org.junit.Test;
@@ -60,7 +60,7 @@ public class EstabelecimentoControllerTest {
     @Test
     public void savePlaceConfiguration() throws NoSuchMethodException {
 
-        Method save = classe.getDeclaredMethod("savePlace", Estabelecimento.class);
+        Method save = classe.getDeclaredMethod("savePlace", EstabelecimentoRequest.class);
 
         assertTrue(save.isAnnotationPresent(PostMapping.class));
     }
