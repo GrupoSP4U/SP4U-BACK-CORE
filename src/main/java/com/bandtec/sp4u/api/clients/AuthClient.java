@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(value = "sp4u-auth", url = "localhost:8080")
+@FeignClient(value = "sp4u-auth", url = "ubuntu@ec2-100-26-215-123.compute-1.amazonaws.com:8080")
 public interface AuthClient {
     @Bean
     @PostMapping("/token")

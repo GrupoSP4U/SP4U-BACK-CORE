@@ -27,7 +27,6 @@ public class ComentarioServiceImpl implements ComentarioService {
     @Autowired
     JwtTokenUtil jwtTokenUtil;
 
-
     public ComentarioServiceImpl(ComentarioRepository repository,
                                  UserRepository userRepository,
                                  EstabelecimentoRepository estabelecimentoRepository) {
@@ -45,8 +44,6 @@ public class ComentarioServiceImpl implements ComentarioService {
             return response;
         }
         try {
-
-
             List<Comentarios> list = repository.findAllByEstabelecimentoId(estabelecimentoId.longValue());
 
             PilhaObj<ComentarioUsuarioMerged> mergedList = new PilhaObj<>(list.size());
