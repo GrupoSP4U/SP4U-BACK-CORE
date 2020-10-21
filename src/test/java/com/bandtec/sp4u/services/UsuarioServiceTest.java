@@ -88,23 +88,6 @@ public class UsuarioServiceTest {
 
 	}
 
-	@Test(expected = Test.None.class)
-	public void saveUserWhenValidadeUserIsFalse() {
-
-		//cenário
-		Mockito.doReturn(false).when(service).validateUser(Mockito.any(Usuario.class));
-
-		//ação
-		Response response = new Response();
-		response = service.saveUser(new Usuario());
-
-		//verificação
-		Assert.assertNotNull(response);
-		Assert.assertTrue(response.isFailure());
-		Assert.assertEquals("Dados incompletos!", response.getMessages().get(0));
-		Mockito.verify(repository, Mockito.never()).save(USUARIO_VALID);
-	}
-
 	@Test(expected = Exception.class)
 	public void saveUserWhenThrowException() {
 
@@ -125,7 +108,6 @@ public class UsuarioServiceTest {
 	public void saveUserWhenSuccess() {
 
 		//cenario
-		Mockito.doReturn(true).when(service).validateUser(Mockito.any(Usuario.class));
 		Mockito.doReturn(true).when(service).validateEmail(Mockito.anyString());
 		Mockito.when(repository.save(Mockito.any(Usuario.class))).thenReturn(USUARIO_VALID);
 
@@ -153,7 +135,7 @@ public class UsuarioServiceTest {
         Assert.assertTrue(response.isSuccess());
 		Assert.assertEquals(USUARIO_VALID, response.getUsuario());
 		Assert.assertEquals(SENHA, response.getUsuario().getSenha());
-		Assert.assertEquals(CPF, response.getUsuario().getCpf());
+		Assert.assertEquals(TELEFONE, response.getUsuario().getTelefone());
 		Assert.assertEquals(DATA_NASCIMENTO, response.getUsuario().getDataNascimento());
 		Assert.assertEquals(EMAIL, response.getUsuario().getEmail());
 		Assert.assertEquals(NOME_COMPLETO, response.getUsuario().getNomeCompleto());

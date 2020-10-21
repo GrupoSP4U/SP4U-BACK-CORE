@@ -3,7 +3,6 @@ package com.bandtec.sp4u.services.impl;
 import java.util.List;
 import java.util.Optional;
 
-import com.bandtec.sp4u.api.clients.AuthClient;
 import com.bandtec.sp4u.api.requests.PasswordRequest;
 import com.bandtec.sp4u.api.security.JwtTokenUtil;
 import com.bandtec.sp4u.domain.models.UsuarioDTO;
@@ -22,8 +21,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     private UserRepository repository;
 
-    @Autowired
-    AuthClient client;
 
     @Autowired
     JwtTokenUtil jwtTokenUtil;
@@ -36,10 +33,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Response saveUser(Usuario user) {
         Response response = new Response();
-        if(!validateUser(user)){
-            response.fail("Dados incompletos!");
-            return response;
-        }
         if(validateEmail(user.getEmail())){
             response.fail("Email já cadastrado!");
             return response;
@@ -48,7 +41,6 @@ public class UsuarioServiceImpl implements UsuarioService {
             repository.save(user);
             UsuarioDTO usuarioDTO = UsuarioDTO.builder().nomeCompleto(user.getNomeCompleto()).email(user.getEmail()).
                     nomeSocial(user.getNomeSocial()).senha(user.getSenha()).build();
-            client.createUser(usuarioDTO);
         } catch (Exception e){
             response.fail(e.toString());
         }
@@ -79,13 +71,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
     	
        return response;
-    }
-
-    @Override
-    public boolean validateUser(Usuario user) {
-        return user.getNomeCompleto() != null && user.getNomeSocial() != null && user.getCpf() != null &&
-                user.getEmail() != null && user.getGenero() != null && user.getSenha() != null &&
-                user.getDataNascimento() != null;
     }
 
     @Override
@@ -133,7 +118,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         String email = jwtTokenUtil.getUsernameFromToken(token);
         Usuario usuario = repository.findByEmail(email);
-        if(usuario.getCpf().isEmpty()) {
+        if(usuario == null) {
             response.fail("Email incorreta!");
             return response;
         }

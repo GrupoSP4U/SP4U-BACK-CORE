@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -21,26 +22,19 @@ import lombok.Setter;
 @Entity(name = "USUARIO")
 public class Usuario extends AbstractIdentity<Long> {
 
-	@Column(name = "NOME_COMPLETO")
+	@NotNull
 	private String nomeCompleto;
-
-	@Column(name = "CPF")
-	private String cpf;
-
-	@Column(name = "NOME_SOCIAL")
+	@NotNull
+	private String telefone;
+	@NotNull
 	private String nomeSocial;
-
-	@Column(name = "DATA_NASCIMENTO")
-	@Temporal(TemporalType.DATE)
+	@NotNull
 	private Date dataNascimento;
-
-	@Column(name = "GENERO")
+	@NotNull
 	private String genero;
-
-	@Column(name = "EMAIL")
+	@NotNull
 	private String email;
-
-	@Column(name = "SENHA")
+	@NotNull
 	private String senha;
 
 	@OneToOne(mappedBy = "usuario")

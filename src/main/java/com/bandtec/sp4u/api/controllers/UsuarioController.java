@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.bandtec.sp4u.services.UsuarioService;
 
+import javax.validation.Valid;
+
 import static org.springframework.http.ResponseEntity.*;
 
 @CrossOrigin
@@ -42,10 +44,10 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity saveUser(@RequestBody Usuario novoCadastro) {
+	public ResponseEntity saveUser(@RequestBody @Valid Usuario novoCadastro) {
 		Response response = service.saveUser(novoCadastro);
 		if(response.isSuccess())
-			return status(HttpStatus.CREATED).build();
+			return status(HttpStatus.CREATED).body(response);
 		else
 			return badRequest().body(response);
 	}
@@ -77,7 +79,4 @@ public class UsuarioController {
 			return badRequest().body(response);
 
 	}
-
-
-
 }
