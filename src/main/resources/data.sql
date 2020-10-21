@@ -1,4 +1,4 @@
-insert into USUARIO (nome_completo, cpf, nome_social, data_nascimento, genero, email, senha)
+insert into USUARIO (nome_completo, telefone, nome_social, data_nascimento, genero, email, senha)
 values
 ('Gustavo Machado Raimundo', '48589520889', 'Xoba', '2001-08-10', 'M', 'gustavo@email.com','1234'),
 ('Emanuelle de Araújo Alves', '43713814805','Manu','2001-04-02', 'F', 'Emanuelle.araujoa7@gmail.com', '123'),

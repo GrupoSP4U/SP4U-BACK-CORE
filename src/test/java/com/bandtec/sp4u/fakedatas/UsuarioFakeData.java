@@ -14,7 +14,7 @@ import java.util.HashSet;
 public class UsuarioFakeData {
 
     public static final String NOME_COMPLETO = "TESTES TESTES TESTES";
-    public static final String CPF = "43713814801";
+    public static final String TELEFONE = "43713814801";
     public static final String NOME_SOCIAL = "TESTE";
     public static final Date DATA_NASCIMENTO = new Date();
     public static final String GENERO = "f";
@@ -23,7 +23,7 @@ public class UsuarioFakeData {
 
     public static final Usuario USUARIO_VALID = Usuario.builder()
             .nomeCompleto(NOME_COMPLETO)
-            .cpf(CPF)
+            .telefone(TELEFONE)
             .nomeSocial(NOME_SOCIAL)
             .dataNascimento(DATA_NASCIMENTO)
             .genero(GENERO)

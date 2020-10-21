@@ -13,8 +13,6 @@ public interface UsuarioService {
 
 	UserResponse getById(Long id);
 
-	boolean validateUser(Usuario user);
-
 	boolean validateEmail(String email);
 
     Response changePassword(PasswordRequest request, String token);
