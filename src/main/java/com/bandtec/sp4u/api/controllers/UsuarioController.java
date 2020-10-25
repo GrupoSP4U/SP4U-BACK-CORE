@@ -12,6 +12,8 @@ import com.bandtec.sp4u.services.UsuarioService;
 
 import javax.validation.Valid;
 
+import java.util.Date;
+
 import static org.springframework.http.ResponseEntity.*;
 
 @CrossOrigin
@@ -38,8 +40,12 @@ public class UsuarioController {
 			
 		UserResponse response = service.getById(id);
 
-		if (response.isFailure())
+		if (response.isFailure()) {
 			return notFound().build();
+		}
+		
+		Date bornDate = response.getUsuario().getDataNascimento();
+		response.getUsuario().setDataNascimento(bornDate);
 		return ok(response);
 	}
 
