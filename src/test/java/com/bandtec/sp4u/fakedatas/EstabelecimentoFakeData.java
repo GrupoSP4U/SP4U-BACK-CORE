@@ -54,6 +54,7 @@ public class EstabelecimentoFakeData {
     public static final List<Dias> DIAS = Arrays.asList(Dias.SEGUNDA, Dias.TERCA);
 
     public static final EstabelecimentoRequest ESTABELECIMENTO_REQUEST = new EstabelecimentoRequest(
+            1L,
             "Selva Club",
             "Selva Club ltda",
             "selva@gmail.com",
