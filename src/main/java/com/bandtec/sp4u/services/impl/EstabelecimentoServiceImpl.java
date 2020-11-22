@@ -76,5 +76,9 @@ public class EstabelecimentoServiceImpl implements EstabelecimentoService {
         return listaFiltrada;
     }
 
+    @Override
+    public List<Estabelecimento> getPlaceByUserId(Long userId) {
+        return repository.findAllByUsuarioId(userId);
+    }
 
 }
