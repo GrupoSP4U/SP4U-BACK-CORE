@@ -24,6 +24,9 @@ import java.util.List;
 public class EstabelecimentoRequest {
 
     @NotNull
+    private Long userId;
+
+    @NotNull
     private String nomeFantasia;
 
     @NotNull

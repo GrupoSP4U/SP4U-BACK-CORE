@@ -1,5 +1,7 @@
 package com.bandtec.sp4u.domain.entities;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -67,7 +69,12 @@ public class Estabelecimento extends AbstractIdentity<Long> {
 
     public static Estabelecimento toEntity(EstabelecimentoRequest dto) {
         Estabelecimento estabelecimento = new Estabelecimento();
+        Set<Usuario> users = new HashSet<>();
+        Usuario user = new Usuario();
+        user.setId(dto.getUserId());
+        users.add(user);
 
+        estabelecimento.usuarios = users;
         estabelecimento.nomeFantasia = dto.getNomeFantasia();
         estabelecimento.razaoSocial = dto.getRazaoSocial();
         estabelecimento.emailContato = dto.getEmailContato();
