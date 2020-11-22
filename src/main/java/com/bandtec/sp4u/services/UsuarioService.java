@@ -18,4 +18,6 @@ public interface UsuarioService {
     Response changePassword(PasswordRequest request, String token);
 
 	Response changeEmail(String newEmail, String token);
+
+    Response updateUser(Usuario newUserInfo, String token) throws IllegalAccessException;
 }

@@ -85,4 +85,17 @@ public class UsuarioController {
 			return badRequest().body(response);
 
 	}
+
+	@PutMapping("/update")
+	public ResponseEntity updateUser(@RequestBody Usuario newUserInfo,
+									 @RequestHeader("Authorization") String token) throws IllegalAccessException {
+		if (token != null && token.startsWith("Bearer ")) {
+			token = token.substring(7);
+		}
+		Response response = service.updateUser(newUserInfo, token);
+		if(response.isSuccess())
+			return ok(response);
+		else
+			return badRequest().body(response);
+	}
 }

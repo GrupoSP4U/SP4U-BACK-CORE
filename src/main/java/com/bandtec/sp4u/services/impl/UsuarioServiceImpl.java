@@ -1,5 +1,6 @@
 package com.bandtec.sp4u.services.impl;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
 
@@ -131,6 +132,44 @@ public class UsuarioServiceImpl implements UsuarioService {
         int update = repository.updateEmail(newEmail, usuario.getId());
         if(update != 1){
             response.fail("Algo deu errado!");
+        }
+
+        return response;
+    }
+
+    @Override
+    public Response updateUser(Usuario newUserInfo, String token) throws IllegalAccessException {
+        Response response = new Response();
+        if(newUserInfo == null)
+            return response.fail("Usuário inválido!");
+
+        String email = jwtTokenUtil.getUsernameFromToken(token);
+        Usuario usuario = repository.findByEmail(email);
+        if(usuario == null) {
+            response.fail("Email incorreto!");
+            return response;
+        }
+
+        try{
+            for(Field fn : newUserInfo.getClass().getDeclaredFields()){
+                fn.setAccessible(true);
+                if(fn.get(newUserInfo) != null){
+                    for(Field fu : usuario.getClass().getDeclaredFields()){
+                        fu.setAccessible(true);
+                        if(fu.getName().equals(fn.getName())){
+                            fu.set(usuario, fn.get(newUserInfo));
+                        }
+                    }
+                }
+            }
+        }catch (Exception e){
+            response.fail("Algo deu errado ao trocar os dados.");
+        }
+
+        try{
+            repository.save(usuario);
+        }catch (Exception e){
+            response.fail("Algo deu errado ao salvar o usuário.");
         }
 
         return response;
