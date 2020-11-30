@@ -23,5 +23,6 @@ public interface EstabelecimentoService {
 	void savePlace(Estabelecimento estabelecimento);
 
 	List<Estabelecimento> getPlaceByUserId(Long userId);
-	
+
+    Response updateEstabelecimento(Estabelecimento newEstabelecimentoInfo, Long id);
 }

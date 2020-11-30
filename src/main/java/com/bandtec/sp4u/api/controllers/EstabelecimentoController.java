@@ -7,6 +7,7 @@ import com.bandtec.sp4u.domain.models.enums.Acompanhamento;
 import com.bandtec.sp4u.domain.models.enums.Caracteristicas;
 import com.bandtec.sp4u.domain.models.enums.EstiloMusica;
 import com.bandtec.sp4u.domain.models.enums.TipoEstabelecimento;
+import com.bandtec.sp4u.domain.notifications.Response;
 import com.bandtec.sp4u.services.EstabelecimentoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,5 +68,15 @@ public class EstabelecimentoController {
         List<Estabelecimento> estabelecimento = service.getPlaceByUserId(userId);
 
         return estabelecimento.isEmpty() ? status(204).build() : status(200).body(estabelecimento);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity updateEstabelecimento(@RequestBody Estabelecimento newEstabelecimentoInfo, Long id) throws IllegalAccessException {
+
+        Response response = service.updateEstabelecimento(newEstabelecimentoInfo, id);
+        if(response.isSuccess())
+            return ok(response);
+        else
+            return badRequest().body(response);
     }
 }
