@@ -41,20 +41,16 @@ public class EstabelecimentoRequest {
     @NotNull
     private String cep;
 
-    @NotNull
     private String mediaPreco;
 
-    @NotNull
     @Max(24)
     @Min(0)
     private Double horarioAbre;
 
     @Max(24)
     @Min(0)
-    @NotNull
     private Double horarioFecha;
 
-    @NotNull
     @Size(max = 7)
     private List<Dias> diasDeFuncionamento;
 
@@ -64,16 +60,12 @@ public class EstabelecimentoRequest {
     @NotNull
     private Integer numeroEndereco;
 
-    @NotNull
     private String complemento;
 
-    @NotNull
     private Double nota;
 
-    @NotNull
     private String foto;
 
-    @NotNull
     private String descricao;
 
     @NotNull

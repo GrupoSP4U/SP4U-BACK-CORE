@@ -42,7 +42,7 @@ public class Estabelecimento extends AbstractIdentity<Long> {
 
     private Boolean paraMaiores;
 
-    @OneToOne(mappedBy = "estabelecimento")
+    @OneToOne(mappedBy = "estabelecimento", cascade = CascadeType.ALL)
     private TagsEstabelecimento tagsEstabelecimento;
 
     @JsonIgnore
@@ -69,12 +69,10 @@ public class Estabelecimento extends AbstractIdentity<Long> {
 
     public static Estabelecimento toEntity(EstabelecimentoRequest dto) {
         Estabelecimento estabelecimento = new Estabelecimento();
-        Set<Usuario> users = new HashSet<>();
         Usuario user = new Usuario();
         user.setId(dto.getUserId());
-        users.add(user);
 
-        estabelecimento.usuarios = users;
+        estabelecimento.usuario = user;
         estabelecimento.nomeFantasia = dto.getNomeFantasia();
         estabelecimento.razaoSocial = dto.getRazaoSocial();
         estabelecimento.emailContato = dto.getEmailContato();
