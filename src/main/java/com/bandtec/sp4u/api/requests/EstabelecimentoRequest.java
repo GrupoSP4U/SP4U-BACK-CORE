@@ -73,4 +73,15 @@ public class EstabelecimentoRequest {
 
     private TagsEstabelecimento tagsEstabelecimento;
 
+    @NotNull
+    private String cidade;
+
+    @NotNull
+    private String bairro;
+
+    @NotNull
+    private String estado;
+
+    @NotNull
+    private String telefone;
 }

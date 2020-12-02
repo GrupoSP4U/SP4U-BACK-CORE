@@ -6,11 +6,9 @@ import com.bandtec.sp4u.domain.models.enums.EstiloMusica;
 import com.bandtec.sp4u.domain.models.enums.TipoEstabelecimento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -21,30 +19,35 @@ import java.util.Collection;
 @Setter
 @Getter
 @Entity(name = "TAGS_ESTABELECIMENTO")
+@Data
 public class TagsEstabelecimento extends AbstractIdentity<Long> {
 
-    @ElementCollection(targetClass= Caracteristicas.class)
+    @ElementCollection(targetClass = Caracteristicas.class)
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name="CARACTERISTICA_ESTABELECIMENTO")
+    @CollectionTable(name = "CARACTERISTICA_ESTABELECIMENTO")
     @Column(name = "CARACTERISTICAS")
+    @Cascade(value = CascadeType.SAVE_UPDATE)
     private Collection<Caracteristicas> caracteristicas;
 
-    @ElementCollection(targetClass= TipoEstabelecimento.class)
+    @ElementCollection(targetClass = TipoEstabelecimento.class)
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name="TIPO_ESTABELECIMENTO")
+    @CollectionTable(name = "TIPO_ESTABELECIMENTO")
     @Column(name = "TIPO_ESTABELECIMENTO")
+    @Cascade(value = CascadeType.SAVE_UPDATE)
     private Collection<TipoEstabelecimento> tipoEstabelecimento;
 
-    @ElementCollection(targetClass= Acompanhamento.class)
+    @ElementCollection(targetClass = Acompanhamento.class)
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name="ACOMPANHAMENTO_ESTABELECIMENTO")
+    @CollectionTable(name = "ACOMPANHAMENTO_ESTABELECIMENTO")
     @Column(name = "TIPO_ACOMPANHAMENTO")
+    @Cascade(value = CascadeType.SAVE_UPDATE)
     private Collection<Acompanhamento> tipoAcompanhamento;
 
-    @ElementCollection(targetClass= EstiloMusica.class)
+    @ElementCollection(targetClass = EstiloMusica.class)
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name="TIPO_MUSICA_ESTABELECIMENTO")
+    @CollectionTable(name = "TIPO_MUSICA_ESTABELECIMENTO")
     @Column(name = "ESTILO_MUSICA")
+    @Cascade(value = CascadeType.SAVE_UPDATE)
     private Collection<EstiloMusica> estiloMusica;
 
     @JsonIgnore

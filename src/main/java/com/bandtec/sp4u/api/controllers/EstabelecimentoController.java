@@ -65,9 +65,9 @@ public class EstabelecimentoController {
 
     @GetMapping("user/{userId}")
     public ResponseEntity getPlaceByUser(@PathVariable Long userId) {
-        List<Estabelecimento> estabelecimento = service.getPlaceByUserId(userId);
+        Estabelecimento estabelecimento = service.getPlaceByUserId(userId);
 
-        return estabelecimento.isEmpty() ? status(204).build() : status(200).body(estabelecimento);
+        return estabelecimento == null ? status(204).build() : status(200).body(estabelecimento);
     }
 
     @PutMapping("/update")
