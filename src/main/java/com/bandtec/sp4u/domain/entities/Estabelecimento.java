@@ -1,7 +1,5 @@
 package com.bandtec.sp4u.domain.entities;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,6 +34,10 @@ public class Estabelecimento extends AbstractIdentity<Long> {
     private String complemento;
     private Double nota;
     private String foto;
+    private String cidade;
+    private String bairro;
+    private String estado;
+    private String telefone;
 
     @Column(length = 400)
     private String descricao;
@@ -48,10 +50,6 @@ public class Estabelecimento extends AbstractIdentity<Long> {
     @JsonIgnore
     @OneToMany(mappedBy = "estabelecimento")
     private Set<Evento> eventos;
-
-    @JsonIgnore
-    @ManyToMany(mappedBy = "estabelecimentos")
-    private Set<Usuario> usuarios = new HashSet<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "estabelecimento")
@@ -89,9 +87,14 @@ public class Estabelecimento extends AbstractIdentity<Long> {
         estabelecimento.descricao = dto.getDescricao();
         estabelecimento.paraMaiores = dto.getParaMaiores();
         estabelecimento.dias = dto.getDiasDeFuncionamento();
+        estabelecimento.telefone = dto.getTelefone();
+        estabelecimento.bairro = dto.getBairro();
+        estabelecimento.cidade = dto.getCidade();
+        estabelecimento.estado = dto.getEstado();
 
-        if(estabelecimento.tagsEstabelecimento != null) {
+        if(dto.getTagsEstabelecimento() != null) {
             estabelecimento.tagsEstabelecimento = dto.getTagsEstabelecimento();
+            estabelecimento.tagsEstabelecimento.setEstabelecimento(estabelecimento);
         }
 
         return estabelecimento;

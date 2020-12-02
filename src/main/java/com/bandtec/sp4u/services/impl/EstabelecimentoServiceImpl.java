@@ -2,7 +2,6 @@ package com.bandtec.sp4u.services.impl;
 
 import com.bandtec.sp4u.application.responses.DetailResponse;
 import com.bandtec.sp4u.domain.entities.Estabelecimento;
-import com.bandtec.sp4u.domain.entities.Usuario;
 import com.bandtec.sp4u.domain.interfaces.dao.EstabelecimentoRepository;
 import com.bandtec.sp4u.domain.models.enums.Acompanhamento;
 import com.bandtec.sp4u.domain.models.enums.Caracteristicas;
@@ -79,8 +78,8 @@ public class EstabelecimentoServiceImpl implements EstabelecimentoService {
     }
 
     @Override
-    public List<Estabelecimento> getPlaceByUserId(Long userId) {
-        return repository.findAllByUsuarioId(userId);
+    public Estabelecimento getPlaceByUserId(Long userId) {
+        return repository.findByUsuarioId(userId);
     }
 
     @Override

@@ -71,7 +71,11 @@ public class EstabelecimentoFakeData {
             "",
             "",
             true,
-            TagsEstabelecimento.builder().build()
+            TagsEstabelecimento.builder().build(),
+            "São Paulo",
+            "Vila vermelha",
+            "SP",
+            "11941482651"
     );
 
     public static final List<Estabelecimento> ESTABELECIMENTO_LIST = Arrays.asList(
@@ -90,9 +94,13 @@ public class EstabelecimentoFakeData {
                     "",
                     3.0,
                     "",
+                    "São Paulo",
+                    "Vila vermelha",
+                    "SP",
+                    "11941482651",
                     "",
                     true,
-                    null, null, null, null,
+                    null, null, null,
                     DIAS,
                     Usuario.builder().build()
             ),
@@ -110,9 +118,13 @@ public class EstabelecimentoFakeData {
                     "",
                     3.0,
                     "",
+                    "São Paulo",
+                    "Vila vermelha",
+                    "SP",
+                    "11941482651",
                     "",
                     true,
-                    null, null, null, null,
+                    null, null, null,
                     DIAS,
                     Usuario.builder().build()
             ),
@@ -130,9 +142,13 @@ public class EstabelecimentoFakeData {
                     "",
                     1.0,
                     "",
+                    "São Paulo",
+                    "Vila vermelha",
+                    "SP",
+                    "11941482651",
                     "",
                     true,
-                    null, null, null, null,
+                    null, null, null,
                     DIAS,
                     Usuario.builder().build()
             )

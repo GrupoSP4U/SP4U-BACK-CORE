@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface EstabelecimentoRepository extends JpaRepository<Estabelecimento, Long> {
-    List<Estabelecimento> findAllByUsuarioId(Long userId);
+    Estabelecimento findByUsuarioId(Long userId);
 }
 

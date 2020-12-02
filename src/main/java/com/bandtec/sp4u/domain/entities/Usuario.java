@@ -40,14 +40,6 @@ public class Usuario extends AbstractIdentity<Long> {
 	@OneToOne(mappedBy = "usuario")
 	private Interesse interesses;
 
-	@ManyToMany
-	@JoinTable(name = "usuario_estabelecimento", joinColumns = {
-			@JoinColumn(name = "FK_USUARIO", referencedColumnName = "id", nullable = false) },
-
-			inverseJoinColumns = {
-					@JoinColumn(name = "FK_ESTABELECIMENTO", referencedColumnName = "id", nullable = false) })
-	private Set<Estabelecimento> estabelecimentos = new HashSet<>();
-
 	@JsonIgnore
 	@OneToMany(mappedBy = "usuario")
 	private Set<Comentarios> comentarios = new HashSet<>();
