@@ -125,4 +125,20 @@ public class EstabelecimentoServiceTest {
         Assert.assertEquals(1,response.size());
         Assert.assertEquals("Recanto",response.get(0).getNomeFantasia());
     }
+
+    @Test
+    public void getPlacesWhenNotAllFilters(){
+        //Cenario
+        Mockito.when(repository.findAll()).thenReturn(Arrays.asList(ESTABELECIMENTO_VALID));
+
+        //Ação
+        List<Estabelecimento> response = service.getPlaces(Caracteristicas.ANIMADO, Acompanhamento.AMIGOS,
+                null, null);
+
+        //Verificação
+        Assert.assertNotNull(response);
+        Assert.assertFalse(response.isEmpty());
+        Assert.assertEquals(1,response.size());
+        Assert.assertEquals("Recanto",response.get(0).getNomeFantasia());
+    }
 }

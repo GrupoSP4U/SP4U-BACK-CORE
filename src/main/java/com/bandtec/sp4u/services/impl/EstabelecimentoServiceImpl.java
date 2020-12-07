@@ -52,18 +52,17 @@ public class EstabelecimentoServiceImpl implements EstabelecimentoService {
 
     @Override
     public List<Estabelecimento> getPlaces(Caracteristicas statusDia, Acompanhamento acompanhado,
-                                    List<TipoEstabelecimento> estiloRole, List<EstiloMusica> estiloMusica) {
+                                           List<TipoEstabelecimento> estiloRole, List<EstiloMusica> estiloMusica) {
 
-        List<Estabelecimento> listaFiltrada = null;
+        List<Estabelecimento> listaFiltrada;
 
         try {
             List<Estabelecimento> listaEstabelecimentoCompleta = repository.findAll();
 
-            listaFiltrada = listaEstabelecimentoCompleta.stream().filter(
-                    estabelecimento -> estabelecimento.getTagsEstabelecimento().getCaracteristicas().equals(statusDia) ||
-                    estabelecimento.getTagsEstabelecimento().getTipoAcompanhamento().equals(acompanhado) ||
-                    estabelecimento.getTagsEstabelecimento().getEstiloMusica().stream().anyMatch(estiloMusica::contains) ||
-                    estabelecimento.getTagsEstabelecimento().getTipoEstabelecimento().stream().anyMatch(estiloRole::contains))
+            listaFiltrada = listaEstabelecimentoCompleta.stream().filter(estabelecimento -> (statusDia != null && estabelecimento.getTagsEstabelecimento().getCaracteristicas().contains(statusDia)) ||
+                    (acompanhado != null && estabelecimento.getTagsEstabelecimento().getTipoAcompanhamento().contains(acompanhado)) ||
+                    (estiloMusica != null && estabelecimento.getTagsEstabelecimento().getEstiloMusica().stream().anyMatch(estiloMusica::contains)) ||
+                    (estiloRole != null && estabelecimento.getTagsEstabelecimento().getTipoEstabelecimento().stream().anyMatch(estiloRole::contains)))
                     .collect(Collectors.toList());
 
             if (listaFiltrada.isEmpty()) {
@@ -85,36 +84,36 @@ public class EstabelecimentoServiceImpl implements EstabelecimentoService {
     @Override
     public Response updateEstabelecimento(Estabelecimento newEstabelecimentoInfo, Long id) {
         Response response = new Response();
-        if(newEstabelecimentoInfo == null)
+        if (newEstabelecimentoInfo == null)
             return response.fail("Esbelecimento inválido!");
 
         Optional<Estabelecimento> estabelecimento = repository.findById(id);
-        if(!estabelecimento.isPresent()) {
+        if (!estabelecimento.isPresent()) {
             response.fail("Estabelecimento não encontrado!");
             return response;
         }
 
         Estabelecimento estabelecimentoSalvo = estabelecimento.get();
 
-        try{
-            for(Field fn : newEstabelecimentoInfo.getClass().getDeclaredFields()){
+        try {
+            for (Field fn : newEstabelecimentoInfo.getClass().getDeclaredFields()) {
                 fn.setAccessible(true);
-                if(fn.get(newEstabelecimentoInfo) != null){
-                    for(Field fu : estabelecimentoSalvo.getClass().getDeclaredFields()){
+                if (fn.get(newEstabelecimentoInfo) != null) {
+                    for (Field fu : estabelecimentoSalvo.getClass().getDeclaredFields()) {
                         fu.setAccessible(true);
-                        if(fu.getName().equals(fn.getName())){
+                        if (fu.getName().equals(fn.getName())) {
                             fu.set(estabelecimentoSalvo, fn.get(newEstabelecimentoInfo));
                         }
                     }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             response.fail("Algo deu errado ao trocar os dados.");
         }
 
-        try{
+        try {
             repository.save(estabelecimentoSalvo);
-        }catch (Exception e){
+        } catch (Exception e) {
             response.fail("Algo deu errado ao salvar o usuário.");
         }
 
