@@ -14,7 +14,7 @@ public interface EstabelecimentoService {
 	
 	DetailResponse getDetailsPlace(Long id);
 	List<Estabelecimento> getPlaces(
-			Caracteristicas statusDia,
+			List<Caracteristicas> statusDia,
             Acompanhamento acompanhado,
             List<TipoEstabelecimento> estiloRole,
             List<EstiloMusica> estiloMusica
