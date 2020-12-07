@@ -88,7 +88,7 @@ public class EstabelecimentoServiceTest {
         Mockito.when(repository.findAll()).thenReturn(null);
 
         //Ação
-        List<Estabelecimento> response = service.getPlaces(Caracteristicas.ANIMADO, Acompanhamento.AMIGOS,
+        List<Estabelecimento> response = service.getPlaces(Arrays.asList(Caracteristicas.ANIMADO), Acompanhamento.AMIGOS,
                 TIPO_ESTABELECIMENTOS, ESTILO_MUSICAS);
 
         //Verificação
@@ -102,7 +102,7 @@ public class EstabelecimentoServiceTest {
         Mockito.when(repository.findAll()).thenThrow(new QueryTimeoutException());
 
         //Ação
-        List<Estabelecimento> response = service.getPlaces(Caracteristicas.ANIMADO, Acompanhamento.AMIGOS,
+        List<Estabelecimento> response = service.getPlaces(Arrays.asList(Caracteristicas.ANIMADO), Acompanhamento.AMIGOS,
                 TIPO_ESTABELECIMENTOS, ESTILO_MUSICAS);
 
         //Verificação
@@ -116,7 +116,7 @@ public class EstabelecimentoServiceTest {
         Mockito.when(repository.findAll()).thenReturn(Arrays.asList(ESTABELECIMENTO_VALID));
 
         //Ação
-        List<Estabelecimento> response = service.getPlaces(Caracteristicas.ANIMADO, Acompanhamento.AMIGOS,
+        List<Estabelecimento> response = service.getPlaces(Arrays.asList(Caracteristicas.ANIMADO), Acompanhamento.AMIGOS,
                 TIPO_ESTABELECIMENTOS, ESTILO_MUSICAS);
 
         //Verificação
@@ -132,7 +132,7 @@ public class EstabelecimentoServiceTest {
         Mockito.when(repository.findAll()).thenReturn(Arrays.asList(ESTABELECIMENTO_VALID));
 
         //Ação
-        List<Estabelecimento> response = service.getPlaces(Caracteristicas.ANIMADO, Acompanhamento.AMIGOS,
+        List<Estabelecimento> response = service.getPlaces(Arrays.asList(Caracteristicas.ANIMADO), Acompanhamento.AMIGOS,
                 null, null);
 
         //Verificação

@@ -51,7 +51,7 @@ public class EstabelecimentoServiceImpl implements EstabelecimentoService {
     }
 
     @Override
-    public List<Estabelecimento> getPlaces(Caracteristicas statusDia, Acompanhamento acompanhado,
+    public List<Estabelecimento> getPlaces(List<Caracteristicas> statusDia, Acompanhamento acompanhado,
                                            List<TipoEstabelecimento> estiloRole, List<EstiloMusica> estiloMusica) {
 
         List<Estabelecimento> listaFiltrada;
@@ -59,10 +59,15 @@ public class EstabelecimentoServiceImpl implements EstabelecimentoService {
         try {
             List<Estabelecimento> listaEstabelecimentoCompleta = repository.findAll();
 
-            listaFiltrada = listaEstabelecimentoCompleta.stream().filter(estabelecimento -> (statusDia != null && estabelecimento.getTagsEstabelecimento().getCaracteristicas().contains(statusDia)) ||
-                    (acompanhado != null && estabelecimento.getTagsEstabelecimento().getTipoAcompanhamento().contains(acompanhado)) ||
-                    (estiloMusica != null && estabelecimento.getTagsEstabelecimento().getEstiloMusica().stream().anyMatch(estiloMusica::contains)) ||
-                    (estiloRole != null && estabelecimento.getTagsEstabelecimento().getTipoEstabelecimento().stream().anyMatch(estiloRole::contains)))
+            listaFiltrada = listaEstabelecimentoCompleta.stream().filter(estabelecimento ->
+                    (statusDia != null && estabelecimento.getTagsEstabelecimento().getCaracteristicas().stream()
+                            .anyMatch(statusDia::contains)) ||
+                            (acompanhado != null && estabelecimento.getTagsEstabelecimento().getTipoAcompanhamento()
+                                    .contains(acompanhado)) ||
+                            (estiloMusica != null && estabelecimento.getTagsEstabelecimento().getEstiloMusica()
+                                    .stream().anyMatch(estiloMusica::contains)) ||
+                            (estiloRole != null && estabelecimento.getTagsEstabelecimento().getTipoEstabelecimento()
+                                    .stream().anyMatch(estiloRole::contains)))
                     .collect(Collectors.toList());
 
             if (listaFiltrada.isEmpty()) {

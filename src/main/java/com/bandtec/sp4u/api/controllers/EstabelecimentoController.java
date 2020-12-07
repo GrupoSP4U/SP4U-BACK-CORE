@@ -39,7 +39,7 @@ public class EstabelecimentoController {
     }
 
     @GetMapping
-    public ResponseEntity getPlaces(@RequestParam(required = false) Caracteristicas statusDia,
+    public ResponseEntity getPlaces(@RequestParam(required = false) List<Caracteristicas> statusDia,
                                     @RequestParam(required = false) Acompanhamento acompanhado,
                                     @RequestParam(required = false) List<TipoEstabelecimento> estiloRole,
                                     @RequestParam(required = false) List<EstiloMusica> estiloMusica) {
